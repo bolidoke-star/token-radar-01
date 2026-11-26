@@ -1,0 +1,20 @@
+{
+  "name": "token-radar-01",
+  "version": "1.0.0",
+  "description": "Multi-Factor Token Launch Radar: liquidity, volume surge, holder concentration and smart-money flow scoring with a zero-dependency CLI.",
+  "type": "module",
+  "main": "src/cli.mjs",
+  "bin": {
+    "token-radar": "src/cli.mjs"
+  },
+  "scripts": {
+    "test": "node --test test"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bolidoke-star/token-radar-01.git"
+  }
+}

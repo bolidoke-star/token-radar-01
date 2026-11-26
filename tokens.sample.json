@@ -1,0 +1,5 @@
+[
+  { "address": "0xaaaa", "symbol": "PEPE", "name": "Pepe Token", "liquidity_usd": 2500000, "volume_24h": 1800000, "volume_change_24h": 140, "holder_concentration": 22, "smart_money_flow_usd": 420000 },
+  { "address": "0xbbbb", "symbol": "STUCK", "name": "Stuck Coin", "liquidity_usd": 45000, "volume_24h": 8000, "volume_change_24h": -60, "holder_concentration": 91, "smart_money_flow_usd": -300000 },
+  { "address": "0xcccc", "symbol": "DARK", "name": "Dark Pool", "liquidity_usd": 12000000, "volume_24h": 600000, "volume_change_24h": 12, "holder_concentration": 12, "smart_money_flow_usd": 1200000 }
+]
