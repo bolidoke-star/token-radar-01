@@ -1,14 +1,17 @@
-﻿export function scoreLiquidity(token) {
+export function scoreLiquidity(token) {
   const depth = Number(token?.liquidityUSD ?? token?.liquidity ?? 0);
+  if (!Number.isFinite(depth) || depth <= 0) return 0;
   if (depth >= 1_000_000) return 100;
-  if (depth <= 0) return 0;
   return Math.min(100, Math.round((depth / 1_000_000) * 100));
 }
 
 export function scoreVolumeSurge(token) {
   const vol24h = Number(token?.volume24hUSD ?? token?.volume24h ?? 0);
-  const volBase = Number(token?.volumeBaselineUSD ?? (token?.liquidityUSD ? token.liquidityUSD * 0.2 : 10_000));
-  if (volBase <= 0) return 50;
+  const liq = Number(token?.liquidityUSD ?? token?.liquidity ?? 0);
+  const fallbackBase = liq > 0 ? liq * 0.2 : 10_000;
+  const volBase = Number(token?.volumeBaselineUSD ?? fallbackBase);
+  if (!Number.isFinite(vol24h) || vol24h <= 0) return 20;
+  if (!Number.isFinite(volBase) || volBase <= 0) return 50;
   const ratio = vol24h / volBase;
   if (ratio >= 5) return 100;
   if (ratio <= 0.5) return 20;
@@ -17,6 +20,7 @@ export function scoreVolumeSurge(token) {
 
 export function scoreHolders(token) {
   const top10 = Number(token?.top10HoldingPercent ?? token?.concentration ?? 50);
+  if (!Number.isFinite(top10)) return 50;
   if (top10 <= 15) return 100;
   if (top10 >= 80) return 10;
   return Math.max(10, Math.round(100 - ((top10 - 15) / 65) * 90));
@@ -26,7 +30,7 @@ export function scoreSmartMoney(token) {
   const buys = Number(token?.smartMoneyBuys24h ?? token?.smartBuys ?? 0);
   const sells = Number(token?.smartMoneySells24h ?? token?.smartSells ?? 0);
   const total = buys + sells;
-  if (total === 0) return 50;
+  if (!Number.isFinite(total) || total <= 0) return 50;
   const netRatio = (buys - sells) / total;
   return Math.min(100, Math.max(0, Math.round(50 + netRatio * 50)));
 }
@@ -50,5 +54,6 @@ export function evaluateToken(token) {
 }
 
 export function scanMarket(tokens = []) {
+  if (!Array.isArray(tokens)) return [];
   return tokens.map(evaluateToken).sort((a, b) => b.totalScore - a.totalScore);
 }
