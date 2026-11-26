@@ -9,9 +9,9 @@
 // Implied value follows only from the snapshot's own figures:
 //
 //   base       = tvl_usd x BASE_MULTIPLE
-//   growth     = clamp(change_7d, -60, 120) per cent
+//   growth     = clamp(change_7d, -50, 140) per cent
 //   growthMult = 1 + (growth / 100) x GROWTH_WEIGHT
-//   maturity   = 0.6 + min(age_days, 1095) / 1095 x 0.4   (age_days unknown: 365)
+//   maturity   = 0.58 + min(age_days, 1095) / 1095 x 0.42   (age_days unknown: 365)
 //   implied    = max(1, round(base x growthMult x maturity))
 //
 // The constants are the house model's, stated in the dashboard and changeable in the model sandbox. No
@@ -53,18 +53,18 @@ export interface ModelConstants {
 }
 
 export const MODEL: ModelConstants = {
-  base_multiple: 0.25,
-  growth_weight: 0.5,
-  growth_floor: -60,
-  growth_cap: 120,
-  maturity_floor: 0.6,
-  maturity_range: 0.4,
+  base_multiple: 0.28,
+  growth_weight: 0.55,
+  growth_floor: -50,
+  growth_cap: 140,
+  maturity_floor: 0.58,
+  maturity_range: 0.42,
   maturity_days: 1095,
   unknown_age_days: 365,
 };
 
 /** The model's version label: the dashboard names it and the rules quote it. */
-export const MODEL_VERSION = 'radar-1';
+export const MODEL_VERSION = 'bolidoke-radar-v2';
 
 /** How many pre-token protocols below the watchlist floor the early radar carries, by TVL. */
 export const EARLY_ROWS = 160;
